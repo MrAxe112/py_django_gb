@@ -1,0 +1,23 @@
+[
+    {
+        "title": "title_1",
+        "data": {
+            "blog": true,
+            "text": "some text for 'title_1'"
+        }
+    },
+    {
+        "title": "title_2",
+        "data": {
+            "blog": true,
+            "text": "some text for 'title_2'"
+        }
+    },
+    {
+        "title": "title_3",
+        "data": {
+            "blog": true,
+            "text": "some text for 'title_3'"
+        }
+    }
+]
