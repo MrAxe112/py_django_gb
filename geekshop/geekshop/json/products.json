@@ -1,0 +1,58 @@
+[
+  {
+    "category": "дом",
+    "name": "Стул дом 1",
+    "image": "products/product-11.jpg",
+    "price": "1253",
+    "quantity": "10"
+  },
+  {
+    "category": "дом",
+    "name": "Стул дом 2",
+    "image": "products/product-21.jpg",
+    "price": "4153",
+    "quantity": "10"
+  },
+  {
+    "category": "офис",
+    "name": "Стул офсиный 1",
+    "image": "products/product-31.jpg",
+    "price": "1100",
+    "quantity": "10"
+  },
+  {
+    "category": "офис",
+    "name": "Стул офсиный 2",
+    "image": "products/product-41.jpg",
+    "price": "2100",
+    "quantity": "10"
+  },
+  {
+    "category": "классика",
+    "name": "Стул классический 1",
+    "image": "products/product-1.jpg",
+    "price": "12100",
+    "quantity": "10"
+  },
+  {
+    "category": "классика",
+    "name": "Стул классический 2",
+    "image": "products/product-2.jpg",
+    "price": "7000",
+    "quantity": "10"
+  },
+  {
+  "category": "модерн",
+  "name": "Стул Модерн 1",
+  "image": "products/product-3.jpg",
+  "price": "800",
+  "quantity": "100"
+  },
+  {
+  "category": "модерн",
+  "name": "Стул Модерн 2",
+  "image": "products/product-4.jpg",
+  "price": "1050",
+  "quantity": "50"
+  }
+]
