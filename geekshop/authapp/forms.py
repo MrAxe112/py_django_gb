@@ -4,7 +4,6 @@ from authapp.models import ShopUser
 
 
 class ShopUserLoginForm(AuthenticationForm):
-
     class Meta:
         model = ShopUser
         fields = ('username', 'password')
@@ -17,7 +16,6 @@ class ShopUserLoginForm(AuthenticationForm):
 
 
 class ShopUserRegisterForm(UserCreationForm):
-
     class Meta:
         model = ShopUser
         fields = ('username', 'first_name', 'last_name', 'avatar', 'email', 'age', 'password1', 'password2')
@@ -34,9 +32,14 @@ class ShopUserRegisterForm(UserCreationForm):
             raise forms.ValidationError("Регистрация возможна только для пользователей старше 18 лет.")
         return data
 
+    def clean_username(self):
+        data = self.cleaned_data['username']
+        if len(data) < 4:
+            raise forms.ValidationError("Имя пользователя должно быть не менее 5 символов")
+        return data
+
 
 class ShopUserChangeForm(UserChangeForm):
-
     class Meta:
         model = ShopUser
         fields = ('username', 'first_name', 'last_name', 'avatar', 'email', 'age', 'password')
