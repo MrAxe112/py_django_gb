@@ -8,15 +8,15 @@ def basket(request):
 
 
 def add(request, pk):
-    product_item = get_object_or_404(Product, ph=pk)
-    basket_item = Basket.object.filter(product=product_item, user=request.user).first()
+    product_item = get_object_or_404(Product, pk=pk)
+    basket_item = Basket.objects.filter(product=product_item, user=request.user).first()
     if not basket_item:
         basket_item = Basket(product=product_item, user=request.user)
 
     basket_item.quantity += 1
     basket_item.save()
 
-    return HttpResponseRedirect(request.META.get(' HTTP_REFERER '))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def remove(request, pk):

@@ -4,12 +4,7 @@
 {% block menu %}
 <div class="hero-white">
     <div class="header clearfix">
-        <a href="/" class="logo"></a>
-        <ul class="menu">
-            {% include 'mainapp/includes/inc_main_menu.html' %}
-        </ul>
-        <a href="#" class="search"></a>
-        <a href="#" class="basket"></a>
+        {% include 'mainapp/includes/inc_main_menu.html' %}
     </div>
 </div>
 {% endblock %}
@@ -48,7 +43,7 @@
             <h3 class="big-bold">{{ hot_product.name }}</h3>
             <h3 class="red">горячее предложение</h3>
             <p class="price"> {{ hot_product.price }} <span>руб</span></p>
-            <a href="#" class="red-button">
+            <a href="{% url 'basket:add' hot_product.pk %}" class="red-button">
                 заказать <i class="fa fa-chevron-right" aria-hidden="true"></i>
             </a>
             <div class="description-text">
