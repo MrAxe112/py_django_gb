@@ -28,8 +28,17 @@ def contact(request):
 
 def get_basket(user):
     if user.is_authenticated:
-        return sum(list(Basket.objects.filter(user=user).values_list('quantity', flat=True)))
-    return 0
+        return Basket.objects.filter(user=user)
+    return None
+
+
+def get_hot_product():
+    return random.sample(list(Product.objects.all()), 1)[0]
+
+
+def get_same_products(hot_product):
+    products_list = Product.objects.filter(category=hot_product.category).exclude(pk=hot_product.pk)
+    return products_list
 
 
 def products(request, pk=None):
@@ -54,12 +63,27 @@ def products(request, pk=None):
         }
         return render(request, 'mainapp/products_list.html', context=context)
 
-    hot_product = random.sample(list(Product.objects.all()), 1)[0]
+    hot_product = get_hot_product()
+    same_products = get_same_products(hot_product)
 
     context = {
         'links_menu': links_menu,
         'title': 'Продукты',
         'hot_product': hot_product,
+        'same_products': same_products,
         'basket': get_basket(request.user)
     }
     return render(request, 'mainapp/products.html', context=context)
+
+
+def product_details(request, pk):
+    title = 'продукты'
+    links_menu = ProductsCategory.objects.all()
+    content = {
+        'title': title,
+        'links_menu': links_menu,
+        'product': get_object_or_404(Product, pk=pk),
+        'basket': get_basket(request.user),
+    }
+
+    return render(request, 'mainapp/product_details.html', content)
