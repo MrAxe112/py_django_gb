@@ -34,7 +34,7 @@ def users(request):
 #     model = ShopUser
 #     template_name = 'adminapp/users.html'
 #
-#  Не реализован ListView: после применения на странице не попадает цикл For in
+#  Не реализован ListView: после применения на страницу не попадает цикл For in
 
 
 class UserUpdateView(AccessMixin, UpdateView):
@@ -62,7 +62,7 @@ def categories(request):
 #     model = ProductsCategory
 #     template_name = 'adminapp/categories.html'
 #
-#  Не реализован ListView: после применения на странице не попадает цикл For in
+#  Не реализован ListView: после применения на страницу не попадает цикл For in
 
 
 class CategoryCreateView(AccessMixin, CreateView):
@@ -96,7 +96,7 @@ def product_list(request, pk):
 # class ProductListView(AccessMixin, ListView):
 #     model = Product
 #     template_name = 'adminapp/products.html'
-#  Не реализован ListView: после применения на странице не попадает цикл For in
+#  Не реализован ListView: после применения на страницу не попадает цикл For in
 
 
 class ProductCreateView(AccessMixin, CreateView):
