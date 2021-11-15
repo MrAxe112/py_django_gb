@@ -20,9 +20,26 @@
             Категория: "{{ category.name|title }}"
         </h2>
     </div>
-    <div class="category-products clearfix">
+</div>
 
-        {% for product in products %}
+<div class="pagination">
+    {% if products.has_previous %}
+        <a href="{% url 'mainapp:page' category.pk products.previous_page_number %}">
+            <
+        </a>
+    {% endif %}
+        <span class="current">страница {{ products.number }} из {{ products.paginator.num_pages }}</span>
+    {% if products.has_next %}
+        <a href="{% url 'mainapp:page' category.pk products.next_page_number %}">
+            >
+        </a>
+    {% endif %}
+</div>
+
+
+<div class="category-products clearfix">
+
+    {% for product in products %}
         <div class="block">
             <a href="{% url 'mainapp:product_details' product.pk %}">
                 <img src="/media/{{ product.image }}" alt="product">
@@ -33,8 +50,7 @@
                 </div>
             </a>
         </div>
-        {% endfor %}
-    </div>
+    {% endfor %}
 </div>
 
 <div class="clr"></div>
