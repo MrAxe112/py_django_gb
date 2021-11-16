@@ -21,20 +21,10 @@ class UserCreateView(AccessMixin, CreateView):
     success_url = reverse_lazy('adminapp:users')
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def users(request):
-    users_list = ShopUser.objects.all().order_by('-is_active', '-is_superuser', 'username')
-
-    context = {
-        'objects': users_list
-    }
-
-    return render(request, 'adminapp/users.html', context)
-# class UserListView(AccessMixin, ListView):
-#     model = ShopUser
-#     template_name = 'adminapp/users.html'
-#
-#  Не реализован ListView: после применения на страницу не попадает цикл For in
+class UserListView(AccessMixin, ListView):
+    model = ShopUser
+    template_name = 'adminapp/users.html'
+    ordering = ['-is_active']
 
 
 class UserUpdateView(AccessMixin, UpdateView):
@@ -50,19 +40,10 @@ class UserDeleteView(AccessMixin, DeleteView):
     success_url = reverse_lazy('adminapp:users')
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def categories(request):
-    category_list = ProductsCategory.objects.all().order_by('-is_active')
-
-    context = {
-        'category_list': category_list
-    }
-    return render(request, 'adminapp/categories.html', context)
-# class CategoriesListView(AccessMixin, ListView):
-#     model = ProductsCategory
-#     template_name = 'adminapp/categories.html'
-#
-#  Не реализован ListView: после применения на страницу не попадает цикл For in
+class CategoriesListView(AccessMixin, ListView):
+    model = ProductsCategory
+    template_name = 'adminapp/categories.html'
+    ordering = ['-is_active', 'name']
 
 
 class CategoryCreateView(AccessMixin, CreateView):
@@ -85,18 +66,18 @@ class CategoryDeleteView(AccessMixin, DeleteView):
     success_url = reverse_lazy('adminapp:category_list')
 
 
-@user_passes_test(lambda u: u.is_superuser)
-def product_list(request, pk):
-    context = {
-        'category': get_object_or_404(ProductsCategory, pk=pk),
-        'objects': Product.objects.filter(category__pk=pk).order_by('-is_active')
-    }
+class ProductListView(AccessMixin, ListView):
+    model = Product
+    template_name = 'adminapp/products.html'
+    ordering = ['-is_active', 'name']
 
-    return render(request, 'adminapp/products.html', context)
-# class ProductListView(AccessMixin, ListView):
-#     model = Product
-#     template_name = 'adminapp/products.html'
-#  Не реализован ListView: после применения на страницу не попадает цикл For in
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['category'] = get_object_or_404(ProductsCategory, pk=self.kwargs.get('pk'))
+        return context_data
+
+    def get_queryset(self):
+        return Product.objects.filter(category__pk=self.kwargs.get('pk'))
 
 
 class ProductCreateView(AccessMixin, CreateView):
