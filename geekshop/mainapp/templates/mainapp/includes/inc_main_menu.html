@@ -10,6 +10,9 @@
         <a href="{% url 'contact' %}" {% if request.resolver_match.url_name == 'contact' %}class="active"{% endif %}>контакты</a>
     </li>
     <li>
+        {% if user.is_superuser %}
+            <li><a href="{% url 'adminapp:users_list' %}">управление</a></li>
+        {% endif %}
         {% if user.is_authenticated %}
             <li><a href="{% url 'auth:edit' %}">{{ user.first_name|default:"Пользователь" }}</a></li>
             <li><a href="{% url 'auth:logout' %}">Выйти</a></li>
@@ -20,4 +23,9 @@
     </li>
 </ul>
         <a href="#" class="search"></a>
-        <a href="{% url 'basket:basket' %}" class="basket">{{ basket }}</a>
+        <a href="{% url 'basket:basket' %}" class="basket">
+            {% if basket %}
+                {{ basket.0.total_cost|floatformat:2 }} руб<br>
+                {{ basket.0.total_quantity }} шт
+            {% endif %}
+        </a>

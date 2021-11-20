@@ -1,6 +1,11 @@
 {% extends 'authapp/base.html' %}
 {% load static %}
 
+{% block head_title %}
+    <div class="h2 text-center head">
+        Редактирование пользователя
+    </div>
+{% endblock %}
 
 {% block content %}
     <img src="/media/{{ user.avatar }}" />
@@ -11,8 +16,9 @@
         <input class="btn btn-primary" type="submit" value="Изменить">
     </form>
         <hr>
-        <a href="{% url 'index' %}">Вернуться на главную страницу</a>
-
+    <button class="btn btn-round">
+          <a href="{% url 'index' %}">на главную</a>
+    </button>
 
 
 {% endblock %}
