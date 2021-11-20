@@ -1,0 +1,25 @@
+{% extends 'authapp/base.html' %}
+{% load static %}
+
+{% block head_title %}
+    <div class="h2 text-center head">
+        Редактирование пользователя
+    </div>
+{% endblock %}
+
+{% block content %}
+    <img src="/media/{{ user.avatar }}" />
+    <form class="form-horizontal" action="{% url 'auth:edit' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ edit_form.as_p }}
+        <br>
+        <input class="btn btn-primary" type="submit" value="Изменить">
+    </form>
+        <hr>
+    <button class="btn btn-round">
+          <a href="{% url 'index' %}">на главную</a>
+    </button>
+
+
+{% endblock %}
+
