@@ -5,6 +5,7 @@ from django.urls import reverse
 from authapp.models import ShopUser
 from authapp.forms import ShopUserLoginForm, ShopUserRegisterForm, ShopUserChangeForm
 from authapp.services import send_verify_email
+from authapp.forms import ShopUserProfileEditForm
 
 
 def login(request):
@@ -53,14 +54,16 @@ def register(request):
 def edit(request):
     if request.method == 'POST':
         edit_form = ShopUserChangeForm(request.POST, request.FILES, instance=request.user)
-        if edit_form.is_valid():
+        edit_profile_form = ShopUserProfileEditForm(request.POST, instance=request.user.shopuserprofile)
+        if edit_form.is_valid() and edit_profile_form.is_valid():
             edit_form.save()
             return HttpResponseRedirect(reverse('auth:edit'))
     else:
         edit_form = ShopUserChangeForm(instance=request.user)
-
+        edit_profile_form = ShopUserProfileEditForm(request.POST, instance=request.user.shopuserprofile)
     context = {
-        'edit_form': edit_form
+        'edit_form': edit_form,
+        'edit_profile_form': edit_profile_form,
     }
 
     return render(request, 'authapp/edit.html', context)
@@ -74,5 +77,5 @@ def verify(request, email, key):
             user.activate_key = None
             user.activate_key_expired = None
             user.save()
-            auth.login(request, user)
+            auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
     return render(request, 'authapp/register_result.html')
