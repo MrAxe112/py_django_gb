@@ -1,11 +1,6 @@
-from collections import OrderedDict
 from datetime import datetime
-from urllib.parse import urlencode, urlunparse
-
 import requests
-from django.utils import timezone
 from social_core.exceptions import AuthForbidden
-
 from authapp.models import ShopUserProfile
 
 
@@ -45,6 +40,3 @@ def save_user_profile(backend, user, response, *args, **kwargs):
         user.shopuserprofile.about_me = data_json['about']
 
     user.save()
-
-
-
