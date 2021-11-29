@@ -14,6 +14,7 @@
             <li><a href="{% url 'adminapp:users_list' %}">управление</a></li>
         {% endif %}
         {% if user.is_authenticated %}
+            <li><a href="{% url 'order:list' %}">Заказы</a></li>
             <li><a href="{% url 'auth:edit' %}">{{ user.first_name|default:"Пользователь" }}</a></li>
             <li><a href="{% url 'auth:logout' %}">Выйти</a></li>
         {% else %}
