@@ -3,7 +3,21 @@ from django.conf import settings
 from mainapp.models import Product
 
 
+class OrderQuerySet(models.QuerySet):
+
+    def delete(self, *args, **kwargs):
+        for object in self:
+            for item in object.orderitems.select_related():
+                item.product.quantity += item.quantity
+                item.product.save()
+            object.is_active = False
+            object.save()
+        super().delete(*args, **kwargs)
+
+
 class Order (models.Model):
+    objects = OrderQuerySet.as_manager()
+
     STATUS_FORMING = 'FM'
     STATUS_SENT_TO_PROCEED = 'STP'
     STATUS_PROCEEDED = 'PRD'
@@ -41,11 +55,10 @@ class Order (models.Model):
         _items = self.orderitems.select_related()
         return sum(list(map(lambda x: x.quantity * x.product.price, _items)))
 
-    def delete(self):
+    def delete(self, *args, **kwargs):
         for item in self.orderitems.select_related():
             item.product.quantity += item.quantity
             item.product.save()
-
         self.is_active = False
         self.save()
 
@@ -58,3 +71,7 @@ class OrderItem(models.Model):
     @property
     def get_product_cost(self):
         return self.product.price * self.quantity
+
+    @staticmethod
+    def get_item(pk):
+        return OrderItem.objects.get(pk=pk)
