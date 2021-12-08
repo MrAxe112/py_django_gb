@@ -64,4 +64,29 @@ window.onload = function () {
        prefix: 'orderitems',
        removed: deleteOrderItem
     });
+
+    $('.order_form select').change(function () {
+       let target = event.target;
+       orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quantity', ''));
+       let product_id = target.options[target.selectedIndex].value;
+       if(product_id){
+           $.ajax({
+                url: '/order/product/price/' + product_id + '/',
+                success: function (data){
+                    console.log('Проверка успешна!!')
+                    if(data.price){
+                        price_arr[orderitem_num] = data.price;
+                        if(isNaN(quantity_arr[orderitem_num])){
+                            quantity_arr[orderitem_num] = 0;
+                        }
+                        let price_string =  '<span>' + data.price.toString().replace('.', ',') + '</span>';
+                        let current_tr = $('.order_form table').find('tr:eq(' + (orderitem_num + 1 ) + ')');
+                        current_tr.find('td:eq(2)').html(price_string);
+                        console.log(price_string)
+                        console.log(current_tr)
+                    }
+                }
+           });
+       };
+    });
 }

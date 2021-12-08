@@ -1,4 +1,5 @@
-from django.shortcuts import get_object_or_404, HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.db import transaction
 from django.forms import inlineformset_factory
@@ -10,6 +11,7 @@ from django.db.models.signals import pre_save, pre_delete
 from basketapp.models import Basket
 from ordersapp.models import Order, OrderItem
 from ordersapp.forms import OrderItemForm
+from mainapp.models import Product
 
 
 class OrderList(ListView):
@@ -135,3 +137,11 @@ def product_quantity_update_save(sender, update_fields, instance, **kwargs):
 def product_quantity_update_delete(sender, instance, **kwargs):
    instance.product.quantity += instance.quantity
    instance.product.save()
+
+
+def get_product_price(request, pk):
+    if request.is_ajax():
+        product_item = Product.objects.get(pk=pk)
+        if product_item:
+            return  JsonResponse({'price': product_item.price })
+        return JsonResponse({'price': 0 })
