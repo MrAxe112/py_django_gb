@@ -13,7 +13,8 @@
         <input class="btn btn-primary" type="submit" value="войти">
     </form>
         <hr>
-        <a href="{% url 'auth:register' %}">Регистрация</a>
+        <a href="{% url 'auth:register' %}">Регистрация</a><br>
+        <a href="{% url 'social:begin' 'vk-oauth2' %}?next=/">Вход через ВК</a>
      <hr>
         <button class="btn btn-round">
             <a href="{% url 'index' %}">Вернуться на главную страницу</a>
