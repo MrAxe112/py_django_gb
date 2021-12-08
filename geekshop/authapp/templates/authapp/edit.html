@@ -12,6 +12,7 @@
     <form class="form-horizontal" action="{% url 'auth:edit' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ edit_form.as_p }}
+        {{ edit_profile_form.as_p }}
         <br>
         <input class="btn btn-primary" type="submit" value="Изменить">
     </form>
