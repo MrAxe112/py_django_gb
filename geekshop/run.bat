@@ -1,4 +1,3 @@
-pushd D:\py_django_gb\geekshop
-python manage.py runserver
+D:\py_django_gb\geekshop\env\Scripts\python D:\py_django_gb\geekshop\manage.py runserver
 pause
 
