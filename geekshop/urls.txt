@@ -1,0 +1,9 @@
+http://185.46.10.19/auth/login POST username=django&password=geekbrains
+http://185.46.10.19/
+http://185.46.10.19/products/
+http://185.46.10.19/contact/
+http://185.46.10.19/products/category/1/
+http://185.46.10.19/basket/
+http://185.46.10.19/order/
+http://185.46.10.19/auth/edit/
+http://185.46.10.19/order/update/1/
