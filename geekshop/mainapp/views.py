@@ -72,3 +72,4 @@ def product_details(request, pk):
     }
 
     return render(request, 'mainapp/product_details.html', context=context)
+
